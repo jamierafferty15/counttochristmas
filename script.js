@@ -198,16 +198,40 @@ const tune = [
 const beat = 285;
 
 function ensureAudio() {
-  if (audioContext) return true;
   const AC = window.AudioContext || window.webkitAudioContext;
   if (!AC) return false;
-  audioContext = new AC();
-  masterGain = audioContext.createGain();
-  masterGain.gain.value = 0.11;
-  const comp = audioContext.createDynamicsCompressor();
-  masterGain.connect(comp);
-  comp.connect(audioContext.destination);
+
+  // iOS may close the context when Safari / a Home Screen app is backgrounded.
+  // Recreate it rather than trying to reuse a closed context.
+  if (!audioContext || audioContext.state === "closed") {
+    audioContext = new AC();
+
+    masterGain = audioContext.createGain();
+    masterGain.gain.value = 0.11;
+
+    const comp = audioContext.createDynamicsCompressor();
+    masterGain.connect(comp);
+    comp.connect(audioContext.destination);
+  }
+
   return true;
+}
+
+function unlockAudioForIOS() {
+  if (!audioContext) return;
+
+  // Start a tiny silent buffer while we are still directly inside the user's tap.
+  // This is a common way to unlock Web Audio on iPhone/iPad Safari and
+  // Home Screen web apps without autoplaying audible sound.
+  try {
+    const buffer = audioContext.createBuffer(1, 1, 22050);
+    const source = audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioContext.destination);
+    source.start(0);
+  } catch (error) {
+    // If the silent unlock is not needed/supported, normal resume still follows.
+  }
 }
 
 function tone(freq, dur, type="triangle", vol=.18, cutoff=1400, detune=0) {
@@ -252,7 +276,31 @@ async function startMusic() {
     musicToggle.disabled = true;
     return;
   }
-  if (audioContext.state === "suspended") await audioContext.resume();
+
+  // Important for iOS: perform an audio action immediately from the tap.
+  unlockAudioForIOS();
+
+  try {
+    if (audioContext.state === "suspended" || audioContext.state === "interrupted") {
+      await audioContext.resume();
+    }
+  } catch (error) {
+    musicLabel.textContent = "Tap Music again";
+    return;
+  }
+
+  // Some iOS versions can take a moment to leave the suspended state.
+  if (audioContext.state !== "running") {
+    try {
+      await audioContext.resume();
+    } catch (error) {}
+  }
+
+  if (audioContext.state !== "running") {
+    musicLabel.textContent = "Tap Music again";
+    return;
+  }
+
   musicEnabled = true;
   musicToggle.setAttribute("aria-pressed","true");
   musicLabel.textContent = "Music: On";
@@ -275,7 +323,16 @@ musicToggle.addEventListener("click", async () => {
 
 window.addEventListener("pagehide", () => {
   if (musicTimer) clearTimeout(musicTimer);
-  if (audioContext && audioContext.state !== "closed") audioContext.close();
+  musicTimer = null;
+  musicEnabled = false;
+});
+
+// If an iPhone/iPad returns to the page after being backgrounded, keep the
+// control state truthful. The next tap will resume/unlock audio again.
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && musicEnabled) {
+    stopMusic();
+  }
 });
 
 
