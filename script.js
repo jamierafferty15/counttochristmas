@@ -271,11 +271,30 @@ function playStep() {
 }
 
 async function startMusic() {
+  // On iPhone/iPad, Web Audio defaults to an ambient audio session.
+  // Ambient audio is muted by the Ring/Silent switch. Marking the session
+  // as playback tells iOS this is intentional media playback.
+  try {
+    if ("audioSession" in navigator) {
+      navigator.audioSession.type = "playback";
+    }
+  } catch (error) {
+    // Older browsers simply continue with the normal Web Audio path.
+  }
+
   if (!ensureAudio()) {
     musicLabel.textContent = "Music unavailable";
     musicToggle.disabled = true;
     return;
   }
+
+  // Repeat after context creation as some WebKit versions recompute
+  // the session when an AudioContext starts.
+  try {
+    if ("audioSession" in navigator) {
+      navigator.audioSession.type = "playback";
+    }
+  } catch (error) {}
 
   // Important for iOS: perform an audio action immediately from the tap.
   unlockAudioForIOS();
