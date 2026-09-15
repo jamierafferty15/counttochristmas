@@ -176,6 +176,22 @@ let musicEnabled = false;
 let musicTimer = null;
 let musicPos = 0;
 
+// iPhone fallback: normal media playback is not muted by the Ring/Silent switch
+// when started directly by a user gesture.
+const isIPhone = /iPhone/i.test(navigator.userAgent);
+let iphoneMusic = null;
+
+function ensureIPhoneMusic() {
+  if (!isIPhone) return null;
+  if (!iphoneMusic) {
+    iphoneMusic = new Audio("jingle-bells-iphone.wav");
+    iphoneMusic.loop = true;
+    iphoneMusic.preload = "auto";
+    iphoneMusic.volume = 0.72;
+  }
+  return iphoneMusic;
+}
+
 const NOTES = {
   C3:130.81, D3:146.83, E3:164.81, F3:174.61, G3:196.00,
   C4:261.63, D4:293.66, E4:329.63, F4:349.23, G4:392.00
@@ -271,15 +287,20 @@ function playStep() {
 }
 
 async function startMusic() {
-  // On iPhone/iPad, Web Audio defaults to an ambient audio session.
-  // Ambient audio is muted by the Ring/Silent switch. Marking the session
-  // as playback tells iOS this is intentional media playback.
-  try {
-    if ("audioSession" in navigator) {
-      navigator.audioSession.type = "playback";
+  // iPhone uses an ordinary HTML media element because iOS mutes Web Audio
+  // when the Ring/Silent switch is on. This path is still user-initiated.
+  if (isIPhone) {
+    const media = ensureIPhoneMusic();
+    try {
+      media.currentTime = media.currentTime || 0;
+      await media.play();
+      musicEnabled = true;
+      musicToggle.setAttribute("aria-pressed", "true");
+      musicLabel.textContent = "Music: On";
+    } catch (error) {
+      musicLabel.textContent = "Tap Music again";
     }
-  } catch (error) {
-    // Older browsers simply continue with the normal Web Audio path.
+    return;
   }
 
   if (!ensureAudio()) {
@@ -288,15 +309,6 @@ async function startMusic() {
     return;
   }
 
-  // Repeat after context creation as some WebKit versions recompute
-  // the session when an AudioContext starts.
-  try {
-    if ("audioSession" in navigator) {
-      navigator.audioSession.type = "playback";
-    }
-  } catch (error) {}
-
-  // Important for iOS: perform an audio action immediately from the tap.
   unlockAudioForIOS();
 
   try {
@@ -308,7 +320,6 @@ async function startMusic() {
     return;
   }
 
-  // Some iOS versions can take a moment to leave the suspended state.
   if (audioContext.state !== "running") {
     try {
       await audioContext.resume();
@@ -328,6 +339,12 @@ async function startMusic() {
 
 function stopMusic() {
   musicEnabled = false;
+
+  if (isIPhone && iphoneMusic) {
+    iphoneMusic.pause();
+    iphoneMusic.currentTime = 0;
+  }
+
   if (musicTimer) clearTimeout(musicTimer);
   musicTimer = null;
   musicPos = 0;
