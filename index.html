@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="A cosy Christmas countdown with weeks, days, hours, minutes and seconds, plus festive music, snow, facts and sharing."
+  />
+  <meta name="theme-color" content="#274f7e" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Christmas Countdown" />
+  <meta
+    property="og:description"
+    content="A cosy Christmas countdown with festive music, snow, facts and sharing."
+  />
+  <meta property="og:image" content="og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta
+    property="og:image:alt"
+    content="A festive Christmas Countdown preview with a winter night scene."
+  />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Christmas Countdown" />
+  <meta
+    name="twitter:description"
+    content="A cosy Christmas countdown with festive music, snow, facts and sharing."
+  />
+  <meta name="twitter:image" content="og-image.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Christmas Countdown" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Christmas Countdown | Countdown to 25 December</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="winter-background" aria-hidden="true">
+    <div class="moon"></div>
+
+    <img class="santa-flight" src="santa-silhouette.png" alt="" />
+
+    <div class="snow-layer snow-back"></div>
+    <div class="snow-layer snow-mid"></div>
+    <div class="snow-layer snow-front"></div>
+
+    <div class="winter-scene">
+      <div class="hill hill-1"></div>
+      <div class="hill hill-2"></div>
+      <div class="hill hill-3"></div>
+
+      <div class="tree tree-1"></div>
+      <div class="tree tree-2"></div>
+      <div class="tree tree-3"></div>
+      <div class="tree tree-4"></div>
+
+      <div class="house house-main">
+        <div class="roof"></div>
+        <div class="window window-left"></div>
+        <div class="window window-right"></div>
+        <div class="door"></div>
+      </div>
+
+      <div class="house house-mid">
+        <div class="roof"></div>
+        <div class="chimney"></div>
+        <div class="window window-left"></div>
+        <div class="window window-right"></div>
+        <div class="door"></div>
+      </div>
+
+      <div class="house house-small">
+        <div class="roof"></div>
+        <div class="window window-left"></div>
+        <div class="window window-right"></div>
+        <div class="door"></div>
+      </div>
+    </div>
+  </div>
+
+  <main class="page-shell">
+    <section class="countdown-card" aria-labelledby="page-title">
+      <div class="hero-icon" aria-hidden="true">
+        <span>🎅🏻</span>
+        <span>🎄</span>
+        <span>⛄</span>
+      </div>
+
+      <p class="eyebrow">Countdown to Christmas</p>
+      <h1 id="page-title">Christmas is coming!!</h1>
+      <p id="target-date" class="target-date">25 December</p>
+
+      <div class="festive-controls" aria-label="Festive controls">
+        <button
+          id="music-toggle"
+          class="festive-control"
+          type="button"
+          aria-pressed="false"
+        >
+          <span aria-hidden="true">♪</span>
+          <span id="music-label">Music: Off</span>
+        </button>
+
+        <button
+          id="snow-toggle"
+          class="festive-control"
+          type="button"
+          aria-pressed="true"
+        >
+          <span aria-hidden="true">❄</span>
+          <span id="snow-label">Snow: On</span>
+        </button>
+
+        <button
+          id="share-button"
+          class="festive-control"
+          type="button"
+          aria-label="Share the current Christmas countdown"
+        >
+          <span aria-hidden="true">📤</span>
+          <span id="share-label">Share</span>
+        </button>
+      </div>
+
+      <div
+        class="countdown-grid"
+        aria-live="polite"
+        aria-label="Time remaining until Christmas"
+      >
+        <div class="time-box">
+          <div id="weeks" class="time-value">0</div>
+          <div class="time-label">Weeks</div>
+        </div>
+
+        <div class="time-box">
+          <div id="days" class="time-value">0</div>
+          <div class="time-label">Days</div>
+        </div>
+
+        <div class="time-box">
+          <div id="hours" class="time-value">00</div>
+          <div class="time-label">Hours</div>
+        </div>
+
+        <div class="time-box">
+          <div id="minutes" class="time-value">00</div>
+          <div class="time-label">Minutes</div>
+        </div>
+
+        <div class="time-box time-box-seconds">
+          <div id="seconds" class="time-value">00</div>
+          <div class="time-label">Seconds</div>
+        </div>
+      </div>
+
+      <div id="message-box" class="message-box" role="button" tabindex="0" aria-label="Celebrate with confetti" title="Click for confetti">
+        <p id="message">Calculating your Christmas countdown…</p>
+      </div>
+
+      <section class="christmas-fact" aria-labelledby="fact-title">
+        <div class="fact-icon" aria-hidden="true">✨</div>
+        <div>
+          <p id="fact-title" class="fact-heading">Christmas fact of the day</p>
+          <p id="fact-text" class="fact-text">Loading today’s festive fact…</p>
+        </div>
+      </section>
+
+
+    </section>
+  </main>
+
+  <p class="footer-note">
+    A cosy little countdown to Christmas, updating every second.
+  </p>
+
+  <script src="script.js"></script>
+</body>
+</html>
