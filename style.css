@@ -940,3 +940,34 @@ h1,
     line-height: 1.5;
   }
 }
+
+/* v42: footer navigation */
+.footer-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.footer-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  pointer-events: auto;
+}
+.footer-links a {
+  color: #cbd3dd;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(203, 211, 221, 0.45);
+}
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.9);
+}
+@media (max-width: 600px) {
+  .footer-note {
+    gap: 5px 9px;
+    font-size: 0.78rem;
+  }
+}

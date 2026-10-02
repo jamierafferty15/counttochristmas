@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Count to Christmas, a simple festive countdown to 25 December." />
+  <link rel="canonical" href="https://counttochristmas.com/about.html" />
+  <meta name="theme-color" content="#274f7e" />
+  <title>About | Count to Christmas</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  
+<style>
+:root {
+  --bg-top:#17385d;
+  --bg-bottom:#2f5d88;
+  --panel:rgba(255,255,255,.10);
+  --border:rgba(255,255,255,.18);
+  --text:#f7f9fc;
+  --soft:#d1d9e4;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:linear-gradient(180deg,var(--bg-top),var(--bg-bottom));
+  color:var(--text);
+}
+.page{
+  width:min(850px,calc(100% - 32px));
+  margin:0 auto;
+  padding:46px 0 70px;
+}
+.top-link{
+  display:inline-block;
+  margin-bottom:24px;
+  color:var(--soft);
+  text-decoration:none;
+}
+.top-link:hover{color:#fff}
+.card{
+  padding:30px;
+  border:1px solid var(--border);
+  border-radius:24px;
+  background:var(--panel);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+h1{
+  margin:0 0 12px;
+  font-size:clamp(2rem,7vw,3.4rem);
+  line-height:1.05;
+}
+h2{margin:30px 0 10px;font-size:1.25rem}
+p,li{color:var(--soft);line-height:1.7;font-size:1rem}
+a{color:#fff}
+.updated{margin-top:0;font-size:.9rem;opacity:.8}
+.small{font-size:.9rem}
+@media(max-width:600px){
+  .page{padding-top:26px}
+  .card{padding:22px 18px;border-radius:18px}
+}
+</style>
+
+</head>
+<body>
+  <main class="page">
+    <a class="top-link" href="index.html">← Back to countdown</a>
+    <article class="card">
+      <h1>About Count to Christmas</h1>
+      <p>Count to Christmas is a simple festive countdown showing the time remaining until 25 December in weeks, days, hours, minutes and seconds.</p>
+
+      <h2>How the countdown works</h2>
+      <p>The countdown uses the date and time on your device and calculates the time remaining until Christmas Day. After Christmas Day has passed, it automatically begins counting down to the following Christmas.</p>
+
+      <h2>What else is included?</h2>
+      <p>Alongside the main countdown, the site includes optional falling snow, festive music, a daily Christmas fact, sharing tools and a simple “sleeps until Christmas” message.</p>
+
+      <h2>Why this site exists</h2>
+      <p>The aim is to keep the experience lightweight, cheerful and easy to use on phones, tablets and desktop computers without requiring an account or sign-in.</p>
+
+      <p class="small"><a href="privacy.html">Read the Privacy Policy</a></p>
+    </article>
+  </main>
+</body>
+</html>
