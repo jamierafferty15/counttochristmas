@@ -4,8 +4,7 @@ const hoursEl = document.getElementById("hours");
 const minutesEl = document.getElementById("minutes");
 const secondsEl = document.getElementById("seconds");
 const targetDateEl = document.getElementById("target-date");
-const messageEl = document.getElementById("message");
-const messageBoxEl = document.getElementById("message-box");
+const sleepsHeroEl = document.getElementById("sleeps-hero");
 
 const musicToggle = document.getElementById("music-toggle");
 const musicLabel = document.getElementById("music-label");
@@ -135,7 +134,6 @@ function updateCountdown() {
     hoursEl.textContent = "00";
     minutesEl.textContent = "00";
     secondsEl.textContent = "00";
-    messageEl.textContent = "🎅 Merry Christmas! 🎁";
     return;
   }
 
@@ -165,11 +163,6 @@ function updateCountdown() {
   minutesEl.textContent = pad(minutes);
   secondsEl.textContent = pad(seconds);
 
-  const sleeps = Math.ceil((christmas.getTime() - now.getTime()) / msDay);
-  messageEl.textContent =
-    sleeps === 1
-      ? "🎁 Only 1 sleep until Christmas!"
-      : `🎁 Only ${sleeps} sleeps until Christmas!`;
 }
 
 updateCountdown();
@@ -447,7 +440,7 @@ const confettiColours = [
   "#ff8ac6"
 ];
 
-function createConfettiBurst(targetEl = messageBoxEl, pieceCount = 54) {
+function createConfettiBurst(targetEl = sleepsHeroEl, pieceCount = 54) {
   if (!targetEl) return;
 
   const rect = targetEl.getBoundingClientRect();
@@ -495,13 +488,13 @@ function createConfettiBurst(targetEl = messageBoxEl, pieceCount = 54) {
   }
 }
 
-if (messageBoxEl) {
-  messageBoxEl.addEventListener("click", () => createConfettiBurst(messageBoxEl, 54));
+if (sleepsHeroEl) {
+  sleepsHeroEl.addEventListener("click", () => createConfettiBurst(sleepsHeroEl, 54));
 
-  messageBoxEl.addEventListener("keydown", (event) => {
+  sleepsHeroEl.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      createConfettiBurst(messageBoxEl, 54);
+      createConfettiBurst(sleepsHeroEl, 54);
     }
   });
 }

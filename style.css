@@ -18,7 +18,6 @@
   --text-main: #ffffff;
   --text-soft: #edf6ff;
 
-  --message-bg: rgba(176, 35, 52, 0.8);
 
   --tree-dark: #1f6d4d;
   --tree-light: #2b845c;
@@ -181,45 +180,6 @@ body.snow-disabled .snow-layer {
   font-size: 0.65rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-.message-box {
-  margin-top: 24px;
-  padding: 18px 20px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: var(--message-bg);
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
-.message-box p {
-  margin: 0;
-}
-
-
-.message-box {
-  position: relative;
-  overflow: visible;
-  cursor: pointer;
-  user-select: none;
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease,
-    background 150ms ease;
-}
-
-.message-box:hover {
-  transform: translateY(-1px);
-}
-
-.message-box:active {
-  transform: translateY(1px) scale(0.995);
-}
-
-.message-box:focus-visible {
-  outline: 3px solid rgba(255, 234, 160, 0.9);
-  outline-offset: 4px;
 }
 
 .confetti-piece {
@@ -854,8 +814,7 @@ h1,
 .fact-heading,
 .fact-text,
 .time-label,
-.time-value,
-.message-box p {
+.time-value {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
 }
 
@@ -1228,4 +1187,24 @@ h1,
   .advent-door-number {
     font-size: 1.45rem;
   }
+}
+
+/* v47: celebrate from the main sleeps hero. */
+.sleeps-hero {
+  cursor: pointer;
+  user-select: none;
+  transition: transform 150ms ease;
+}
+
+.sleeps-hero:hover {
+  transform: translateY(-1px);
+}
+
+.sleeps-hero:active {
+  transform: translateY(1px) scale(0.995);
+}
+
+.sleeps-hero:focus-visible {
+  outline: 3px solid rgba(255, 234, 160, 0.9);
+  outline-offset: 4px;
 }
