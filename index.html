@@ -40,13 +40,23 @@
   <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="manifest" href="site.webmanifest" />
-  <link rel="stylesheet" href="style.css?v=45" />
+  <link rel="stylesheet" href="style.css?v=46" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7759235938318828"
      crossorigin="anonymous"></script>
-<link rel="stylesheet" href="content.css?v=45" />
+  <link rel="stylesheet" href="content.css?v=46" />
 </head>
-<body><nav class="site-nav" aria-label="Main navigation"><a href="index.html" aria-current="page">Countdown</a><a href="christmas-facts.html">Christmas Facts</a><a href="christmas-traditions.html">Traditions</a><a href="sleeps-until-christmas.html">How Many Sleeps?</a><a href="christmas-countdown-guide.html">Countdown Guide</a><a href="christmas-around-the-world.html">Around the World</a><a href="about.html">About</a><a href="privacy.html">Privacy</a></nav>
-  <div class="winter-background" aria-hidden="true">
+<body class="home-page">
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="index.html" aria-current="page">Countdown</a>
+  <a href="christmas-facts.html">Christmas Facts</a>
+  <a href="christmas-traditions.html">Traditions</a>
+  <a href="sleeps-until-christmas.html">How Many Sleeps?</a>
+  <a href="christmas-countdown-guide.html">Countdown Guide</a>
+  <a href="christmas-around-the-world.html">Around the World</a>
+  <a href="about.html">About</a>
+  <a href="privacy.html">Privacy</a>
+</nav>
+<div class="winter-background" aria-hidden="true">
     <div class="moon"></div>
 
     <img class="santa-flight" src="santa-silhouette.png" alt="" />
@@ -100,6 +110,14 @@
       <p class="eyebrow">Countdown to Christmas</p>
       <h1 id="page-title">Christmas is coming!!</h1>
       <p id="target-date" class="target-date">25 December</p>
+
+      <section class="sleeps-hero" aria-live="polite" aria-label="Sleeps until Christmas">
+        <div class="sleeps-number" id="sleeps-number">--</div>
+        <div class="sleeps-copy">
+          <p class="sleeps-label" id="sleeps-label">sleeps until Christmas</p>
+          <p class="seasonal-line" id="seasonal-line">Counting the festive days…</p>
+        </div>
+      </section>
 
       <div class="festive-controls" aria-label="Festive controls">
         <button
@@ -175,17 +193,53 @@
           <p id="fact-text" class="fact-text">Loading today’s festive fact…</p>
         </div>
       </section>
-<section class="home-about" aria-labelledby="about-countdown-title"><h2 id="about-countdown-title">About the countdown</h2><p>Count to Christmas is a small place to enjoy the anticipation of 25 December. The live timer follows your device’s local clock and shows complete weeks, remaining days, hours, minutes and seconds until Christmas begins. The sleeps message rounds the time up to a whole day; on Christmas Day, the timer pauses at zero with a festive greeting.</p><p>Make the scene your own with optional music and falling snow, enjoy the daily fact, or share the countdown with someone looking forward to Christmas. Music starts when you choose it. For the stories behind the season, explore our Christmas facts, traditions and guides below.</p><p><a href="sleeps-until-christmas.html">How sleeps are calculated</a> · <a href="christmas-facts.html">Browse the Christmas Facts archive</a></p></section>
+
+      <section class="advent-section" aria-labelledby="advent-title">
+        <div class="advent-heading-row">
+          <div>
+            <p class="eyebrow advent-eyebrow">A little reason to come back tomorrow</p>
+            <h2 id="advent-title">Your Christmas Advent Calendar</h2>
+          </div>
+          <span class="advent-badge" id="advent-badge">24 doors</span>
+        </div>
+        <p class="advent-intro" id="advent-status">
+          The first door unlocks on 1 December.
+        </p>
+        <div class="advent-grid" id="advent-grid" aria-label="24-day Christmas advent calendar"></div>
+        <div class="advent-reveal" id="advent-reveal" hidden aria-live="polite">
+          <p class="advent-reveal-kicker" id="advent-reveal-kicker"></p>
+          <h3 id="advent-reveal-title"></h3>
+          <p id="advent-reveal-text"></p>
+        </div>
+      </section>
+
+      <section class="home-about" aria-labelledby="about-countdown-title">
+        <h2 id="about-countdown-title">About the countdown</h2>
+        <p>Count to Christmas is a small place to enjoy the anticipation of 25 December. The live timer follows your device’s local clock and shows complete weeks, remaining days, hours, minutes and seconds until Christmas begins. The sleeps number rounds the time up to the next Christmas morning, which is why it feels a little more human than a stopwatch.</p>
+        <p>Make the scene your own with optional music and falling snow, open a new Advent Calendar door each day in December, enjoy the daily fact, or share the countdown with someone else looking forward to Christmas.</p>
+        <p><a href="sleeps-until-christmas.html">How sleeps are calculated</a> · <a href="christmas-facts.html">Browse the Christmas Facts archive</a></p>
+      </section>
+
     </section>
   </main>
 
   <footer class="footer-note">
     <span>A cosy little countdown to Christmas, updating every second.</span>
-    <nav class="site-nav" aria-label="Main navigation"><a href="index.html" aria-current="page">Countdown</a><a href="christmas-facts.html">Christmas Facts</a><a href="christmas-traditions.html">Traditions</a><a href="sleeps-until-christmas.html">How Many Sleeps?</a><a href="christmas-countdown-guide.html">Countdown Guide</a><a href="christmas-around-the-world.html">Around the World</a><a href="about.html">About</a><a href="privacy.html">Privacy</a></nav></footer>
+    <nav class="site-nav" aria-label="Main navigation">
+  <a href="index.html">Countdown</a>
+  <a href="christmas-facts.html">Christmas Facts</a>
+  <a href="christmas-traditions.html">Traditions</a>
+  <a href="sleeps-until-christmas.html">How Many Sleeps?</a>
+  <a href="christmas-countdown-guide.html">Countdown Guide</a>
+  <a href="christmas-around-the-world.html">Around the World</a>
+  <a href="about.html">About</a>
+  <a href="privacy.html">Privacy</a>
+</nav>
+  </footer>
 
   <!-- Cloudflare Web Analytics -->
   <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ae47901be24840b9a30b381e82ab1de9"}'></script>
   <!-- End Cloudflare Web Analytics -->
-  <script src="script.js?v=45"></script>
+  <script src="script.js?v=46"></script>
 </body>
 </html>

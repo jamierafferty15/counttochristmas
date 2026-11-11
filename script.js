@@ -14,6 +14,16 @@ const snowLabel = document.getElementById("snow-label");
 const shareButton = document.getElementById("share-button");
 const shareLabel = document.getElementById("share-label");
 const factTextEl = document.getElementById("fact-text");
+const sleepsNumberEl = document.getElementById("sleeps-number");
+const sleepsLabelEl = document.getElementById("sleeps-label");
+const seasonalLineEl = document.getElementById("seasonal-line");
+const adventGridEl = document.getElementById("advent-grid");
+const adventStatusEl = document.getElementById("advent-status");
+const adventBadgeEl = document.getElementById("advent-badge");
+const adventRevealEl = document.getElementById("advent-reveal");
+const adventRevealKickerEl = document.getElementById("advent-reveal-kicker");
+const adventRevealTitleEl = document.getElementById("advent-reveal-title");
+const adventRevealTextEl = document.getElementById("advent-reveal-text");
 
 function pad(value) {
   return String(value).padStart(2, "0");
@@ -55,12 +65,67 @@ function updateBrowserTitle(now, christmas) {
   document.title = `${daysRemaining} ${dayWord} · Countdown to Christmas`;
 }
 
+
+function countSaturdaysUntilChristmas(now, christmas) {
+  const cursor = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const end = new Date(christmas.getFullYear(), christmas.getMonth(), christmas.getDate());
+  let count = 0;
+
+  while (cursor < end) {
+    if (cursor.getDay() === 6) count += 1;
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return count;
+}
+
+function updatePersonalCountdown(now, christmas) {
+  if (!sleepsNumberEl || !seasonalLineEl) return;
+
+  const msDay = 1000 * 60 * 60 * 24;
+  const christmasEnd = new Date(christmas.getFullYear(), 11, 26, 0, 0, 0, 0);
+
+  if (now >= christmas && now < christmasEnd) {
+    sleepsNumberEl.textContent = "0";
+    sleepsLabelEl.textContent = "sleeps — Christmas is here";
+    seasonalLineEl.textContent = "Merry Christmas! 🎄";
+    return;
+  }
+
+  const sleeps = Math.max(0, Math.ceil((christmas.getTime() - now.getTime()) / msDay));
+  const saturdays = countSaturdaysUntilChristmas(now, christmas);
+
+  sleepsNumberEl.textContent = sleeps;
+  sleepsLabelEl.textContent = sleeps === 1 ? "sleep until Christmas" : "sleeps until Christmas";
+
+  let message;
+  if (sleeps > 60) {
+    message = "Plenty of time for plans, lists and a little festive anticipation.";
+  } else if (sleeps > 30) {
+    message = "The festive season is getting closer — the countdown is properly underway.";
+  } else if (sleeps > 14) {
+    message = "Christmas is within touching distance now.";
+  } else if (sleeps > 7) {
+    message = "Two weeks or less — the lights, music and festive plans are taking over.";
+  } else if (sleeps > 1) {
+    message = "This is the final festive stretch.";
+  } else if (sleeps === 1) {
+    message = "One more sleep. That’s it.";
+  } else {
+    message = "Christmas is here.";
+  }
+
+  const saturdayText =
+    saturdays === 1 ? "1 Saturday left" : `${saturdays} Saturdays left`;
+  seasonalLineEl.textContent = `${saturdayText} · ${message}`;
+}
+
 function updateCountdown() {
   const now = new Date();
   const christmas = getChristmasTarget(now);
   const christmasEnd = new Date(christmas.getFullYear(), 11, 26, 0, 0, 0, 0);
 
   updateBrowserTitle(now, christmas);
+  updatePersonalCountdown(now, christmas);
 
   targetDateEl.textContent = `25 December ${christmas.getFullYear()}`;
 
@@ -442,6 +507,154 @@ if (messageBoxEl) {
 }
 
 
+
+
+/* Progressive Advent Calendar */
+const adventItems = [
+  { type: "Festive fact", title: "A Victorian Christmas first", text: "The first commercial Christmas card was commissioned in London in 1843. A simple idea became a tradition that now travels in billions of envelopes and messages." },
+  { type: "Tiny activity", title: "Make the room feel festive", text: "Turn off the main lights for ten minutes and switch on only your Christmas lights or a lamp. Instant December atmosphere." },
+  { type: "Christmas joke", title: "A suitably terrible joke", text: "What do snowmen eat for breakfast? Frosted flakes." },
+  { type: "Trivia", title: "Which song came first?", text: "Jingle Bells was published in 1857 — and it was not originally written specifically as a Christmas song." },
+  { type: "Festive suggestion", title: "Choose tonight’s Christmas song", text: "Pick one festive song you have not heard yet this year and give it a proper listen rather than leaving it in the background." },
+  { type: "Tradition", title: "Saint Nicholas Day", text: "6 December is Saint Nicholas Day in several European countries, with traditions that often include small gifts or sweets for children." },
+  { type: "Tiny activity", title: "Send one unexpected message", text: "Message someone you have not spoken to for a while and wish them a good December. No group chat required." },
+  { type: "Festive fact", title: "Why evergreen?", text: "Evergreen plants became powerful winter symbols because they stay green when much of the natural world looks bare." },
+  { type: "Christmas joke", title: "Today’s groaner", text: "Why was the Christmas tree bad at knitting? It kept dropping its needles." },
+  { type: "Trivia", title: "A silver surprise", text: "Early tinsel was made from real silver. It looked beautiful, but it tarnished — and it was far less practical than today’s version." },
+  { type: "Tiny activity", title: "Five-minute festive reset", text: "Put away five things, straighten one room, then reward yourself with a hot drink. Consider it pre-Christmas damage control." },
+  { type: "Festive fact", title: "Twelve days really do begin at Christmas", text: "Traditionally, the Twelve Days of Christmas begin on Christmas Day rather than ending on it." },
+  { type: "Tradition", title: "Saint Lucia’s Day", text: "In Sweden, 13 December is Saint Lucia’s Day, marked by candlelight, singing and processions during one of the darkest parts of winter." },
+  { type: "Festive suggestion", title: "Pick a Christmas film", text: "Choose one Christmas film for this week and actually schedule it. A plan is much more likely to happen than 'we should watch that sometime'." },
+  { type: "Christmas joke", title: "Another cracker-worthy joke", text: "What do you call an elf wearing earmuffs? Anything you like — they can’t hear you." },
+  { type: "Festive fact", title: "The Trafalgar Square tree", text: "Oslo has traditionally sent London a Christmas tree as a yearly gift of thanks for British support during the Second World War." },
+  { type: "Tiny activity", title: "Make a mini festive playlist", text: "Choose exactly five Christmas songs: one classic, one modern, one guilty pleasure, one calm track and one wildcard." },
+  { type: "Trivia", title: "A Christmas ballet", text: "The Nutcracker premiered in Saint Petersburg in 1892. It became far more closely associated with Christmas in later decades." },
+  { type: "Festive suggestion", title: "Do one useful future-you favour", text: "Wrap one present, write one card, check one delivery or make one list. Just one." },
+  { type: "Festive fact", title: "The robin connection", text: "Robins became especially associated with British Christmas cards in the Victorian era; red-coated postal workers were nicknamed 'robins' too." },
+  { type: "Christmas joke", title: "Almost Christmas", text: "What is Santa’s favourite type of music? Wrap." },
+  { type: "Tiny activity", title: "A two-minute gratitude list", text: "Write down three things that made this year better. They do not have to be profound." },
+  { type: "Festive suggestion", title: "Christmas Eve Eve", text: "Pick one thing you can finish today so Christmas Eve feels calmer tomorrow." },
+  { type: "Christmas Eve", title: "The final door", text: "You made it to Christmas Eve. Put the lists down for a moment, enjoy the lights, and notice the anticipation — this is the bit the whole countdown was for. 🎄" }
+];
+
+function getAdventUnlockCount(now) {
+  const month = now.getMonth();
+  const day = now.getDate();
+
+  if (month < 11) return 0;
+  if (month > 11) return 0;
+  if (day >= 24) return 24;
+  return Math.max(0, day);
+}
+
+function getOpenedAdventDays(year) {
+  try {
+    const raw = localStorage.getItem(`counttochristmas-advent-${year}`);
+    return raw ? JSON.parse(raw) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveOpenedAdventDays(year, days) {
+  try {
+    localStorage.setItem(`counttochristmas-advent-${year}`, JSON.stringify(days));
+  } catch (error) {}
+}
+
+function revealAdventDay(day, button, year) {
+  const item = adventItems[day - 1];
+  if (!item || !adventRevealEl) return;
+
+  adventRevealKickerEl.textContent = `Door ${day} · ${item.type}`;
+  adventRevealTitleEl.textContent = item.title;
+  adventRevealTextEl.textContent = item.text;
+  adventRevealEl.hidden = false;
+
+  document.querySelectorAll(".advent-door.is-selected").forEach((door) => {
+    door.classList.remove("is-selected");
+    door.setAttribute("aria-expanded", "false");
+  });
+
+  button.classList.add("is-open", "is-selected");
+  button.setAttribute("aria-expanded", "true");
+
+  const opened = getOpenedAdventDays(year);
+  if (!opened.includes(day)) {
+    opened.push(day);
+    saveOpenedAdventDays(year, opened);
+  }
+
+  const marker = button.querySelector(".advent-door-state");
+  if (marker) marker.textContent = "Opened";
+
+  adventRevealEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function renderAdventCalendar() {
+  if (!adventGridEl) return;
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const unlockCount = getAdventUnlockCount(now);
+  const opened = getOpenedAdventDays(year);
+
+  if (now.getMonth() < 11) {
+    adventStatusEl.textContent = "The first door unlocks on 1 December. Come back each day for a new festive surprise.";
+    adventBadgeEl.textContent = "Unlocks 1 Dec";
+  } else if (unlockCount >= 24) {
+    adventStatusEl.textContent = "All 24 doors are unlocked — open any one you missed.";
+    adventBadgeEl.textContent = "All doors open";
+  } else {
+    adventStatusEl.textContent = `Doors 1–${unlockCount} are unlocked. Today’s door is ready whenever you are.`;
+    adventBadgeEl.textContent = `Day ${unlockCount} of 24`;
+  }
+
+  adventGridEl.innerHTML = "";
+
+  for (let day = 1; day <= 24; day += 1) {
+    const isUnlocked = day <= unlockCount;
+    const wasOpened = opened.includes(day);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "advent-door";
+    button.dataset.day = String(day);
+    button.setAttribute("aria-expanded", "false");
+
+    if (!isUnlocked) {
+      button.disabled = true;
+      button.classList.add("is-locked");
+      button.setAttribute("aria-label", `Advent door ${day}, locked`);
+    } else {
+      button.setAttribute("aria-label", `Open Advent door ${day}`);
+      if (wasOpened) button.classList.add("is-open");
+    }
+
+    const number = document.createElement("span");
+    number.className = "advent-door-number";
+    number.textContent = String(day);
+
+    const icon = document.createElement("span");
+    icon.className = "advent-door-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = isUnlocked ? (wasOpened ? "✨" : "🎁") : "🔒";
+
+    const state = document.createElement("span");
+    state.className = "advent-door-state";
+    state.textContent = !isUnlocked ? "Locked" : (wasOpened ? "Opened" : "Open me");
+
+    button.append(number, icon, state);
+
+    if (isUnlocked) {
+      button.addEventListener("click", () => revealAdventDay(day, button, year));
+    }
+
+    adventGridEl.appendChild(button);
+  }
+}
+
+renderAdventCalendar();
 
 /* Share the countdown exactly as it appears when the button is pressed */
 function getCurrentCountdownShareText() {
